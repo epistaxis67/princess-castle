@@ -1,0 +1,137 @@
+/* ============ Princess Castle ============ */
+:root {
+  color-scheme: light;
+  --ink: #111;
+  --muted: #555;
+  --ground: #f6f6f5;
+  --serif: "EB Garamond", Garamond, "Times New Roman", serif;
+  --script: "Pinyon Script", "Snell Roundhand", cursive;
+}
+
+* { box-sizing: border-box; }
+
+html, body { margin: 0; }
+
+body {
+  background: var(--ground);
+  color: var(--ink);
+  font-family: var(--serif);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body.locked { overflow: hidden; }
+
+/* ============ Bild, das verschwindet ============ */
+.cover {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  background: var(--ground);
+  cursor: pointer;
+  transition: opacity 1.1s cubic-bezier(.4, 0, .2, 1), visibility 0s linear 1.1s;
+}
+.cover:focus-visible { outline: none; }
+.cover:focus-visible img { outline: 1px solid var(--ink); outline-offset: 8px; }
+
+.cover img {
+  display: block;
+  width: min(78vw, 760px);
+  height: auto;
+  filter: grayscale(1) contrast(1.04);
+  transition: transform 1.1s cubic-bezier(.4, 0, .2, 1), filter 1.1s;
+}
+
+.cover.gone {
+  opacity: 0;
+  visibility: hidden;
+}
+.cover.gone img {
+  transform: scale(.985);
+  filter: grayscale(1) contrast(1.04) blur(2px);
+}
+
+/* ============ Seite ============ */
+.page {
+  padding: clamp(56px, 11vw, 140px) 16px clamp(48px, 8vw, 96px);
+}
+
+.sheet {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+.letterhead { text-align: center; }
+.letterhead h1 { margin: 0; }
+.letterhead img {
+  display: block;
+  width: min(100%, 620px);
+  height: auto;
+  margin: 0 auto;
+}
+
+.spaced {
+  font-size: clamp(11px, 1.4vw, 13.5px);
+  letter-spacing: .4em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.letterhead .spaced { margin: 18px 0 clamp(56px, 9vw, 112px); }
+
+.columns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: clamp(32px, 5vw, 64px);
+}
+
+.columns p {
+  margin: 0 0 .8em;
+  font-size: clamp(16px, 1.5vw, 17px);
+  line-height: 1.52;
+  text-align: justify;
+  hyphens: auto;
+  -webkit-hyphens: auto;
+}
+
+.caps {
+  font-weight: 500;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+}
+.caps-plain { letter-spacing: .02em; }
+
+h2 {
+  margin: 1.3em 0 .35em;
+  font-family: var(--script);
+  font-weight: 400;
+  font-size: clamp(26px, 2.6vw, 30px);
+  line-height: 1.15;
+}
+.columns section > h2:first-child { margin-top: 0; }
+
+blockquote {
+  margin: 1.6em 0 0;
+  padding: 0 4%;
+  font-family: var(--script);
+  font-size: clamp(24px, 2.5vw, 28px);
+  line-height: 1.3;
+  text-align: center;
+}
+
+.foot { margin: clamp(64px, 9vw, 120px) 0 0; color: var(--muted); }
+.foot a { color: inherit; text-decoration: none; }
+.foot a:hover { color: var(--ink); }
+
+/* ============ Mobil ============ */
+@media (max-width: 760px) {
+  .cover img { width: 100%; }
+  .columns { grid-template-columns: 1fr; }
+  .columns section + section > h2:first-child { margin-top: 1.3em; }
+  .spaced { letter-spacing: .26em; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cover, .cover img { transition-duration: .2s; }
+}
